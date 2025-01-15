@@ -1,6 +1,6 @@
 <?php
 
-//ex flow: controller-model:getAll -> controller-view:showAll
+//example flow: controller-model:getAll -> controller-view:showAll
 
 class ActorsController {
 
@@ -18,5 +18,7 @@ class ActorsController {
         header('Pages/selectOne.php');
         ActorsView::show_all(ActorsModel::get_one($_GET['id']));
     }
+
+    
 }
 ?>
