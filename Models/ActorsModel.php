@@ -2,7 +2,7 @@
 
 class ActorsModel{
 
-    public static function get_all(): mysqli_result {
+    public static function get_all(): array {
         require_once 'DB/db_connection.php';
         $query = "SELECT * FROM actor;";
 
@@ -10,15 +10,23 @@ class ActorsModel{
         $stmt->execute();
         $result = $stmt->get_result();
 
-        if($result->num_rows <= 0){
-            die('no items to be showed');
+        while($arrayActor = $result->fetch_obj()){
+            $actor = new Actor(
+                $arrayActor['actor_id'],
+                $arrayActor['first_name'],
+                $arrayActor['last_name'],
+                new DateTime($arrayActor['last_update']),
+            );
+            $array[] = $actor;
         }
 
-        $conn->close();
-        return $result;
+        
+        $con->close();
+
+        return $arrayActor;
     }
 
-    public static function get_one(int $actorId): mysqli_result {
+    public static function get_one(int $actorId): Actor {
         
         require_once 'DB/db_connection.php';
         $query = "SELECT * FROM actor
@@ -33,7 +41,8 @@ class ActorsModel{
         }
 
         $conn->close();
-        return $result;
+        $result->fetch_obj();
+        return new Actor($result);
     }
 }
 

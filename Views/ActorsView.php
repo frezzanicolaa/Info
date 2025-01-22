@@ -2,7 +2,7 @@
 
 class ActorsView{
 
-    public static function show_all(mysqli_result $result): void {
+    public static function show_all(array $actors): void {
         echo "<table>";
             echo "<tr><th>ID</th><th>Name</th><th>Surname</th><th>Last Update</th></tr>";
             while ($row = $result->fetch_assoc()) {

@@ -56,17 +56,6 @@ class Film {
         echo $this->toString();
     }
 
-    public static function getFilm(int $id): array{
-        $con = ConnectDb::getConnection();
-        
-        $query = "SELECT * FROM film WHERE film_id =".$id.";";
-        
-        $result = $con-> query($query); //eseguo la query
-        
-        $con->close();
-        $result ->fetch_object();
-
-        return new Film($result);
-    }
+    
 }
 ?>
