@@ -1,22 +1,34 @@
 <?php
 
-class ActorsView{
-
+class ActorsView {
     public static function show_all(array $actors): void {
-        echo "<table>";
-            echo "<tr><th>ID</th><th>Name</th><th>Surname</th><th>Last Update</th></tr>";
-            while ($row = $result->fetch_assoc()) {
-                echo "<tr>";
-                echo "<td>" . $row['actor_id'] . "</td>";
-                echo "<td>" . $row['first_name'] . "</td>";
-                echo "<td>" . $row['last_name'] . "</td>";
-                echo "<td>" . $row['last_update'] . "</td>";
-                echo "</tr>";
+        echo "<h1>Lista degli Attori</h1>";
+        if (count($actors) > 0) {
+            echo "<ul>";
+            foreach ($actors as $actor) {
+                echo "<li>
+                    <a href='index.php?controller=actors&action=show_one&id={$actor->getId()}'>
+                        {$actor->getFirstName()} {$actor->getLastName()}
+                    </a>    
+                </li>";
             }
-            echo "</table>";
-
+            echo "</ul>";
+        } else {
+            echo "<p>Nessun attore trovato.</p>";
+        }
     }
 
+    public static function show_one($actor) {
+        if ($actor) {
+            echo "<h1>Dettagli Attore</h1>";
+            echo "<p>ID: {$actor->getId()}</p>";
+            echo "<p>Nome: {$actor->getFirstName()}</p>";
+            echo "<p>Cognome: {$actor->getLastName()}</p>";
+        } else {
+            echo "<h1>Attore non trovato</h1>";
+        }
+    }
 }
+
 
 ?>

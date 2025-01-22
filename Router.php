@@ -5,35 +5,37 @@
 
 
 class Router {
+    private $defaultController = "pages";
+    private $defaultAction = "go_home";
+
     public function route() {
-        
-        //building the controler string
-        $controller = ucfirst(strtolower($_GET['controller'] ?? 'pages')) . 'Controller';
-        //getting the action string
-        $action = $_GET['action'] ?? 'go_home';
+        // parameters extraction
+        $controller = isset($_GET['controller']) ? $_GET['controller'] : $this->defaultController;
+        $action = isset($_GET['action']) ? $_GET['action'] : $this->defaultAction;
 
-        $controllerFile = "Controllers/$controller.php";
+        // building the controller's class name
+        $controllerClass = ucfirst($controller) . "Controller";
+        $controllerFile = "Controllers/$controllerClass.php";
 
-        //check file
-        if (!file_exists($controllerFile)) {
-            die("Controller not found: $controller");
+        // checking file and class 
+        if (file_exists($controllerFile)) {
+            require_once $controllerFile;
+
+            if (class_exists($controllerClass)) {
+                $controllerInstance = new $controllerClass();
+
+                if (method_exists($controllerInstance, $action)) {
+                    // calling action's method
+                    $controllerInstance->$action();
+                } else {
+                    echo "Metodo $action non trovato nel controller $controllerClass.";
+                }
+            } else {
+                echo "Classe controller $controllerClass non esistente.";
+            }
+        } else {
+            echo "File controller $controllerFile non trovato.";
         }
-        //if file exist require it
-        require_once $controllerFile;
-
-        //check class
-        if (!class_exists($controller)) {
-            die("class not found: $controller");
-        }
-        //if the required class exist, go on and instance the controller 
-        $controllerInstance = new $controller();
-
-        //check action
-        if (!method_exists($controllerInstance, $action)) {
-            die("Non valid method: $action");
-        }
-        //run the method if exists!!
-        $controllerInstance->$action();
     }
 }
 

@@ -2,21 +2,32 @@
 
 //example flow: controller-model:getAll -> controller-view:showAll
 
+require_once 'Models/Actor.php';
+require_once 'Views/ActorsView.php';
+
 class ActorsController {
 
-    //the conformity is checked before so i can assume that there'll be everytime a method where the program can go in
+    
     public function show_all() {
-        require_once 'Models/ActorsModel.php';
-        require_once 'Views/ActorsView.php';
-        ActorsView::show_all(ActorsModel::get_all());
+        
+        //getting actors from model
+        $actors = Actor::get_all();
 
+        //displaying them
+        ActorsView::show_all($actors);
     }
 
     public function show_one(){
-        require_once 'Models/ActorsModel.php';
-        require_once 'Views/ActorsView.php';
-        header('Pages/selectOne.php');
-        ActorsView::show_all(ActorsModel::get_one($_GET['id']));
+        
+        $id = isset($_GET['id']) ? (int)$_GET['id'] : null;
+
+        if ($id) {
+            $actor = Actor::get_one($id);
+            
+            ActorsView::show_one($actor);
+        } else {
+            echo "<h1>ID non fornito</h1>";
+        }
     }
 
     
