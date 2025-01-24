@@ -1,7 +1,5 @@
 <?php
 
-//flow: index-router -> router-model -> model-router -> router-view 
-
 
 
 class Router {

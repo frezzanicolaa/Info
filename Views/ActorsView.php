@@ -24,6 +24,7 @@ class ActorsView {
             echo "<p>ID: {$actor->getId()}</p>";
             echo "<p>Nome: {$actor->getFirstName()}</p>";
             echo "<p>Cognome: {$actor->getLastName()}</p>";
+            echo "<p>Ultimo aggiornamento: {$actor->getLastUpdate()}</p>";
         } else {
             echo "<h1>Attore non trovato</h1>";
         }

@@ -2,7 +2,7 @@
 
 class PagesController {
     public function go_home() {
-        header('home.php');
+        header('Views/home.php');
     }
 }
 ?>

@@ -9,7 +9,7 @@ class Actor {
         $this->id = $id;
         $this->firstName = $firstName;
         $this->lastName = $lastName;
-        $this->lastUpdate = $lastUpdate;
+        $this->lastUpdate = DateTime::createFromFormat('Y-m-d H:i:s', $lastUpdate);
     }
     
     public function getId(): int {
@@ -22,6 +22,10 @@ class Actor {
 
     public function getLastName(): string {
         return $this->lastName;
+    }
+
+    public function getLastUpdate(): string {
+        return $this->lastUpdate->format('Y-m-d H:i:s');
     }
 
     public static function get_all(): array {
@@ -39,7 +43,7 @@ class Actor {
                 $row['actor_id'],
                 $row['first_name'],
                 $row['last_name'],
-                new DateTime()
+                $row['last_update'],
             );
             $arrayActors[] = $actor;
         }
@@ -68,7 +72,7 @@ class Actor {
             $row['actor_id'],
             $row['first_name'],
             $row['last_name'],
-            new DateTime() 
+            $row['last_update'],
         );
     }
     
